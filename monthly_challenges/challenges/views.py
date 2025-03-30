@@ -1,4 +1,5 @@
 from django.http import (
+    Http404,
     HttpRequest,
     HttpResponse,
     HttpResponseNotFound,
@@ -41,9 +42,7 @@ def monthly_challenge_by_number(
     return HttpResponseRedirect(redirect_to=redirect_path)
 
 
-def monthly_challenge(
-    request: HttpRequest, month: str
-) -> HttpResponse | HttpResponseNotFound:
+def monthly_challenge(request: HttpRequest, month: str) -> HttpResponse | Http404:
     try:
         challenge_text = MONTHLY_CHALLENGES[month.lower()]
         return render(
@@ -52,7 +51,7 @@ def monthly_challenge(
             context={"month": month, "text": challenge_text},
         )
     except:
-        return HttpResponseNotFound("<h1>This month is not supported!</h1>")
+        raise Http404()  # Looks for 404.html file in templates/ by default
 
 
 def index(request: HttpRequest) -> HttpResponse:
