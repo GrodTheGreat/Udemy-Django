@@ -56,12 +56,10 @@ def monthly_challenge(
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    response_data = "<ul>"
-    for month in list(MONTHLY_CHALLENGES.keys()):
-        redirect_path = reverse(
-            viewname="month-challenge", args=[month]
-        )  # /challenge/<month>
-        response_data += f'<li><a href="{redirect_path}">{month.capitalize()}</a></li>'
-    response_data += "</ul>"
+    months = list(MONTHLY_CHALLENGES.keys())
 
-    return HttpResponse(content=response_data)
+    return render(
+        request=request,
+        template_name="challenges/index.html",
+        context={"months": months},
+    )
