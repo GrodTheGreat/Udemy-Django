@@ -1,4 +1,4 @@
-# Learn how to build web applications and websites with Python and the Django framework
+# Python Django - The Practical Guide
 
 Python is the **most popular programming language** of the world - it is versatile, easy to learn and very powerful!
 
