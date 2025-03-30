@@ -49,7 +49,7 @@ def monthly_challenge(
         return render(
             request=request,
             template_name="challenges/challenge.html",
-            context={"month": month.capitalize(), "text": challenge_text},
+            context={"month": month, "text": challenge_text},
         )
     except:
         return HttpResponseNotFound("<h1>This month is not supported!</h1>")
