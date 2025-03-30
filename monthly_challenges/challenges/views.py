@@ -21,7 +21,7 @@ MONTHLY_CHALLENGES = {
     "september": "Learn Django for at least 20 minutes a day!",
     "october": "Eat no meat for the entire month!",
     "november": "Walk for at least 20 minutes every day!",
-    "december": "Learn Django for at least 20 minutes a day!",
+    "december": None,
 }
 
 
