@@ -8,7 +8,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def posts(request: HttpRequest) -> HttpResponse:
-    return HttpResponse("posts")
+    return render(request=request, template_name="blog/posts.html")
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
