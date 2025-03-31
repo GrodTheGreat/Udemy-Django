@@ -1,17 +1,21 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        {% block title %}
-        {% endblock title %}
-    </title>
-    {% block css_files %}
-    {% endblock css_files %}
-</head>
-<body>
-    {% block content %}
-    {% endblock content %}
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A Django course about building a blog">
+        <meta name="keywords" content="Django, Python, Udemy">
+        <title>
+            {% block title %}
+            {% endblock title %}
+        </title>
+        <link rel="stylesheet" href="{% static "base.css" %}">
+        {% block css_files %}
+        {% endblock css_files %}
+    </head>
+    <body>
+        {% block content %}
+        {% endblock content %}
+    </body>
 </html>
