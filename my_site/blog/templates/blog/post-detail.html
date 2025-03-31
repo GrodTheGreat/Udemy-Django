@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}
+  The Post Title
+{% endblock title %}
+{% block css_files %}
+  <link rel="stylesheet" href="{% static "blog/styles/posts.css" %}">
+  <link rel="stylesheet" href="{% static "blog/styles/post-detail.css" %}">
+{% endblock css_files %}
+{% block content %}
+  <section id="summary">
+    <h2>Post Title</h2>
+    <article>
+      <img src="{% static "blog/images/mountains.jpg" %}"
+           alt="Post title"
+           width="300"
+           height="300">
+      <address>By Maximilian</address>
+      <div>
+        Last updated on <time datetime="">July 10th</time>
+      </div>
+    </article>
+  </section>
+  <main>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati tempore asperiores repudiandae. Aliquid, voluptates quisquam distinctio aliquam ex perferendis, qui id et saepe quasi officia eos molestias incidunt veniam?
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati tempore asperiores repudiandae. Aliquid, voluptates quisquam distinctio aliquam ex perferendis, qui id et saepe quasi officia eos molestias incidunt veniam?
+    </p>
+    <p>
+      Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum obcaecati tempore asperiores repudiandae. Aliquid, voluptates quisquam distinctio aliquam ex perferendis, qui id et saepe quasi officia eos molestias incidunt veniam?
+    </p>
+  </main>
+{% endblock content %}

@@ -12,4 +12,4 @@ def posts(request: HttpRequest) -> HttpResponse:
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
-    return HttpResponse(slug)
+    return render(request=request, template_name="blog/post-detail.html")
