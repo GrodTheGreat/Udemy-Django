@@ -71,7 +71,13 @@ POSTS = [
 
 # Create your views here.
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request=request, template_name="blog/index.html")
+    sorted_posts = sorted(POSTS, key=lambda x: x.get("date"))
+    latest_posts = sorted_posts[-3:]
+    return render(
+        request=request,
+        template_name="blog/index.html",
+        context={"posts": latest_posts},
+    )
 
 
 def posts(request: HttpRequest) -> HttpResponse:
