@@ -80,9 +80,18 @@ def index(request: HttpRequest) -> HttpResponse:
     )
 
 
-def posts(request: HttpRequest) -> HttpResponse:
-    return render(request=request, template_name="blog/posts.html")
+def all_posts(request: HttpRequest) -> HttpResponse:
+    return render(
+        request=request,
+        template_name="blog/posts.html",
+        context={"posts": POSTS},
+    )
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
-    return render(request=request, template_name="blog/post-detail.html")
+    identified_post = next(post for post in POSTS if post["slug"] == slug)
+    return render(
+        request=request,
+        template_name="blog/post-detail.html",
+        context={"post": identified_post},
+    )
