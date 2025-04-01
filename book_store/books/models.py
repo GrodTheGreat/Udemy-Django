@@ -10,17 +10,23 @@ class Country(models.Model):
     name = models.CharField(max_length=80)
     code = models.CharField(max_length=2)
 
+    class Meta:
+        verbose_name_plural = "Countries"
+
+    def __str__(self):
+        return self.name
+
 
 class Address(models.Model):
     street = models.CharField(max_length=80)
     postal_code = models.CharField(max_length=5)
     city = models.CharField(max_length=50)
 
-    def __str__(self):
-        return f"{self.street}, {self.postal_code}, {self.city}"
-
     class Meta:
         verbose_name_plural = "Addresses"
+
+    def __str__(self):
+        return f"{self.street}, {self.postal_code}, {self.city}"
 
 
 class Author(models.Model):
