@@ -4,9 +4,9 @@ from django.db import models
 
 # Create your models here.
 class Author(models.Model):
-    first_name = models.CharField(max_length=50)
+    first_name = models.CharField(max_length=100)
     last_name = models.CharField(
-        max_length=50, blank=True, null=False, default=""
+        max_length=100, blank=True, null=False, default=""
     )
     email = models.EmailField(
         max_length=254, blank=True, null=False, default=""
@@ -33,7 +33,9 @@ class Post(models.Model):
     date = models.DateField(auto_now=True)
     slug = models.SlugField(unique=True, db_index=True)
     content = models.TextField(validators=[MinLengthValidator(10)])
-    author = models.ForeignKey(to=Author, on_delete=models.CASCADE)
+    author = models.ForeignKey(
+        to=Author, on_delete=models.SET_NULL, related_name="posts"
+    )
     tag = models.ManyToManyField(to=Tag)
 
     def __str__(self):
