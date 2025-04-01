@@ -18,7 +18,7 @@ def book_detail(request: HttpRequest, id: int) -> HttpResponse:
     book = get_object_or_404(Book, pk=id)
     return render(
         request=request,
-        template_name="books/book_detail.html",
+        template_name="books/book-detail.html",
         context={
             "title": book.title,
             "author": book.author,
