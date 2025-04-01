@@ -1,6 +1,8 @@
 from datetime import date
 from django.http import HttpRequest, HttpResponse
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
+
+from .models import Post
 
 POSTS = [
     {
@@ -71,8 +73,8 @@ POSTS = [
 
 # Create your views here.
 def index(request: HttpRequest) -> HttpResponse:
-    sorted_posts = sorted(POSTS, key=lambda x: x.get("date"))
-    latest_posts = sorted_posts[-3:]
+    latest_posts = Post.objects.all().order_by("-date")[:3]
+
     return render(
         request=request,
         template_name="blog/index.html",
@@ -81,15 +83,18 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def all_posts(request: HttpRequest) -> HttpResponse:
+    posts = Post.objects.all()
+
     return render(
         request=request,
         template_name="blog/posts.html",
-        context={"posts": POSTS},
+        context={"posts": posts},
     )
 
 
 def post(request: HttpRequest, slug: str) -> HttpResponse:
-    identified_post = next(post for post in POSTS if post["slug"] == slug)
+    identified_post = get_object_or_404(Post, slug=slug)
+
     return render(
         request=request,
         template_name="blog/post-detail.html",
