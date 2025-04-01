@@ -2,5 +2,10 @@ from django.contrib import admin
 
 from .models import Book
 
+
 # Register your models here.
-admin.site.register(model_or_iterable=Book)
+class BookAdmin(admin.ModelAdmin):
+    prepopulated_fields = {"slug": ("title",)}
+
+
+admin.site.register(model_or_iterable=Book, admin_class=BookAdmin)
