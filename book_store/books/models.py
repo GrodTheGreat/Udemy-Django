@@ -6,9 +6,18 @@ from django.urls import reverse
 
 
 # Create your models here.
+class Address(models.Model):
+    street = models.CharField(max_length=80)
+    postal_code = models.CharField(max_length=5)
+    city = models.CharField(max_length=50)
+
+
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
+    address = models.OneToOneField(
+        to=Address, on_delete=models.CASCADE, null=True
+    )
 
     def __str__(self):
         return self.full_name()
