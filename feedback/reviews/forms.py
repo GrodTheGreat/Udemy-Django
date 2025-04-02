@@ -2,7 +2,7 @@ from django import forms
 
 from .models import Review
 
-# * Basic Form
+# * Basic Form (This is totally valid)
 # class ReviewForm(forms.Form):
 #     name = forms.CharField(
 #         label="Your Name",
@@ -24,3 +24,14 @@ class ReviewForm(forms.ModelForm):
         model = Review
         fields = "__all__"  # Alternatively you can give a list of fields from the model
         # exclude = []  # You can also do this instead
+        labels = {
+            "name": "Your Name",
+            "review_text": "Your Feedback",
+            "rating": "Your Rating",
+        }
+        error_messages = {
+            "name": {
+                "required": "Your name must not be empty!",
+                "max_length": "Please enter a shorter name!",
+            }
+        }
