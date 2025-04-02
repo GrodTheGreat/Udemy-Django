@@ -12,8 +12,9 @@ def review(request: HttpRequest) -> HttpResponse:
         if form.is_valid():
             print(form.cleaned_data)
             return HttpResponseRedirect(redirect_to="/thank-you")
+    else:
+        form = ReviewForm()
 
-    form = ReviewForm()
     context = {"form": form}
 
     return render(
