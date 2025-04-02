@@ -3,12 +3,13 @@
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="keywords" content="">
+    <meta name="description" content="A simple django lesson on forms">
+    <meta name="keywords" content="review django forms">
     <title>Review</title>
   </head>
   <body>
-    <form action="">
+    <form action="" method="post">
+      {% csrf_token %}
       <label for="name">Your Name</label>
       <input type="text" name="name" id="name">
       <button type="submit">Send</button>
