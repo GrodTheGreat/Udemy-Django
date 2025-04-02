@@ -16,7 +16,7 @@ def index(request: HttpRequest) -> HttpResponse:
 
 
 def all_posts(request: HttpRequest) -> HttpResponse:
-    posts = Post.objects.all()
+    posts = Post.objects.all().order_by("-date")
 
     return render(
         request=request,
