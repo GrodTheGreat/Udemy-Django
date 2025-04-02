@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,11 +7,16 @@
     <meta name="description" content="A simple django lesson on forms">
     <meta name="keywords" content="review django forms">
     <title>Review</title>
+    <link rel="stylesheet" href="{% static "reviews/styles.css" %}">
   </head>
   <body>
     <form action="{% url "index" %}" method="post">
       {% csrf_token %}
-      {{ form }}
+      <div class="form-control {% if form.name.errors %}errors{% endif %}">
+        {{ form.name.label_tag }}
+        {{ form.name }}
+        {{ form.name.errors }}
+      </div>
       <button type="submit">Send</button>
     </form>
   </body>
