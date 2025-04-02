@@ -10,8 +10,7 @@
   <body>
     <form action="{% url "index" %}" method="post">
       {% csrf_token %}
-      <label for="name">Your Name</label>
-      <input type="text" name="name" id="name">
+      {{ form }}
       <button type="submit">Send</button>
     </form>
   </body>
