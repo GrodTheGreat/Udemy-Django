@@ -25,11 +25,11 @@ def all_posts(request: HttpRequest) -> HttpResponse:
     )
 
 
-def post(request: HttpRequest, slug: str) -> HttpResponse:
+def post_detail(request: HttpRequest, slug: str) -> HttpResponse:
     identified_post = get_object_or_404(Post, slug=slug)
 
     return render(
         request=request,
         template_name="blog/post-detail.html",
-        context={"post": identified_post},
+        context={"post": identified_post, "tags": identified_post.tags.all()},
     )
