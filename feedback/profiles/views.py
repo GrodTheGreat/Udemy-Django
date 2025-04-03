@@ -1,9 +1,10 @@
 # from django.core.files.uploadedfile import UploadedFile
-from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import render
-from django.views import View
+# from django.http import HttpRequest, HttpResponseRedirect
+# from django.shortcuts import render
+# from django.views import View
+from django.views.generic.edit import CreateView
 
-from .forms import ProfileForm
+# from .forms import ProfileForm
 from .models import UserProfile
 
 # Create your views here.
@@ -15,25 +16,32 @@ from .models import UserProfile
 #             dest.write(chunk)
 
 
-class CreateProfileView(View):
-    def get(self, request: HttpRequest):
-        form = ProfileForm()
-        return render(
-            request=request,
-            template_name="profiles/create-profile.html",
-            context={"form": form},
-        )
+# class CreateProfileView(View):
+#     def get(self, request: HttpRequest):
+#         form = ProfileForm()
+#         return render(
+#             request=request,
+#             template_name="profiles/create-profile.html",
+#             context={"form": form},
+#         )
 
-    def post(self, request: HttpRequest):
-        form = ProfileForm(request.POST, request.FILES)
-        if form.is_valid():
-            profile = UserProfile(image=request.FILES["image"])
-            profile.save()
-            # store_file(request.FILES["image"])
-            return HttpResponseRedirect(redirect_to="/profiles")
+#     def post(self, request: HttpRequest):
+#         form = ProfileForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             profile = UserProfile(image=request.FILES["image"])
+#             profile.save()
+#             # store_file(request.FILES["image"])
+#             return HttpResponseRedirect(redirect_to="/profiles")
 
-        return render(
-            request=request,
-            template_name="profiles/create-profile.html",
-            context={"form": form},
-        )
+#         return render(
+#             request=request,
+#             template_name="profiles/create-profile.html",
+#             context={"form": form},
+#         )
+
+
+class CreateProfileView(CreateView):
+    template_name = "profiles/create-profile.html"
+    model = UserProfile
+    fields = "__all__"
+    success_url = "/profiles"
