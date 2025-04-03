@@ -1,6 +1,6 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import get_object_or_404, render
 from django.views import View
 from django.views.generic.base import TemplateView
 
@@ -96,7 +96,8 @@ class ReviewDetail(TemplateView):
 
     def get_context_data(self, **kwargs) -> dict[str, Any]:
         context = super().get_context_data(**kwargs)
-        review = Review.objects.all()
+        id = kwargs["id"]
+        review = get_object_or_404(klass=Review, pk=id)
         context["review"] = review
 
         return context

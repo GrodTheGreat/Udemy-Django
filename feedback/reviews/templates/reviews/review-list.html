@@ -4,6 +4,10 @@
 {% endblock title %}
 {% block content %}
   <ul>
-    {% for review in reviews %}<li>{{ review.name }} ({{ review.rating }})</li>{% endfor %}
+    {% for review in reviews %}
+      <li>
+        <a href="{% url "detail" id=review.pk %}">{{ review.name }} ({{ review.rating }})</a>
+      </li>
+    {% endfor %}
   </ul>
 {% endblock content %}
