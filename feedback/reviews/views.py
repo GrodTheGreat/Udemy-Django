@@ -1,8 +1,9 @@
 from typing import Any
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from django.views import View
-from django.views.generic import DetailView, ListView
+
+# from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+# from django.shortcuts import render
+# from django.views import View
+from django.views.generic import DetailView, FormView, ListView
 from django.views.generic.base import TemplateView
 
 from .forms import ReviewForm
@@ -11,31 +12,39 @@ from .models import Review
 
 # Create your views here.
 # Class based view
-class ReviewView(View):
-    def get(self, request: HttpRequest) -> HttpResponse:
-        form = ReviewForm()
-        context = {"form": form}
+class ReviewView(FormView):
+    form_class = ReviewForm
+    template_name = "reviews/review.html"
+    success_url = "/thank-you"
 
-        return render(
-            request=request,
-            template_name="reviews/review.html",
-            context=context,
-        )
+    def form_valid(self, form):
+        form.save()
+        return super().form_valid(form)
 
-    def post(self, request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
-        form = ReviewForm(data=request.POST)
-        if form.is_valid():
-            form.save()
+    # def get(self, request: HttpRequest) -> HttpResponse:
+    #     form = ReviewForm()
+    #     context = {"form": form}
 
-            return HttpResponseRedirect(redirect_to="/thank-you")
+    #     return render(
+    #         request=request,
+    #         template_name="reviews/review.html",
+    #         context=context,
+    #     )
 
-        context = {"form": form}
+    # def post(self, request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
+    #     form = ReviewForm(data=request.POST)
+    #     if form.is_valid():
+    #         form.save()
 
-        return render(
-            request=request,
-            template_name="reviews/review.html",
-            context=context,
-        )
+    #         return HttpResponseRedirect(redirect_to="/thank-you")
+
+    #     context = {"form": form}
+
+    #     return render(
+    #         request=request,
+    #         template_name="reviews/review.html",
+    #         context=context,
+    #     )
 
 
 # Function based view
