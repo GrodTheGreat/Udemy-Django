@@ -3,6 +3,9 @@ from typing import Any
 # from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 # from django.shortcuts import render
 # from django.views import View
+from django.http import HttpRequest
+from django.shortcuts import get_object_or_404
+from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 from django.views.generic.edit import CreateView
@@ -114,3 +117,9 @@ class ReviewDetail(DetailView):
     #     context["review"] = review
 
     #     return context
+
+
+class FavoriteView(View):
+    def post(self, request: HttpRequest):
+        review_id = request.POST.get("review_id")
+        favorite_review = get_object_or_404(Review, pk=review_id)
