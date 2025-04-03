@@ -109,13 +109,14 @@ class ReviewDetail(DetailView):
     template_name = "reviews/review-detail.html"
     model = Review
 
-    # def get_context_data(self, **kwargs) -> dict[str, Any]:
-    #     context = super().get_context_data(**kwargs)
-    #     id = kwargs["id"]
-    #     review = get_object_or_404(klass=Review, pk=id)
-    #     context["review"] = review
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        loaded_review = self.object
+        request = self.request
+        favorite_id = request.session["favorite_review"]
+        context["is_favorite"] = favorite_id == str(loaded_review.id)
 
-    #     return context
+        return context
 
 
 class FavoriteView(View):
