@@ -2,21 +2,28 @@ from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from .forms import ReviewForm
-from .models import Review
+
+# from .models import Review
 
 
 # Create your views here.
 def review(request: HttpRequest) -> HttpResponse:
     if request.method == "POST":
-        form = ReviewForm(data=request.POST)
+        # existing_review = Review.objects.get(pk=1)
+        form = ReviewForm(
+            data=request.POST,
+            # To update an existing model with a ModelForm
+            # instance=existing_review
+        )
 
         if form.is_valid():
-            review = Review(
-                name=form.cleaned_data.get("name"),
-                review_text=form.cleaned_data.get("review_text"),
-                rating=form.cleaned_data.get("rating"),
-            )
-            review.save()
+            # This isn't needed for a ModelForm
+            # review = Review(
+            #     name=form.cleaned_data.get("name"),
+            #     review_text=form.cleaned_data.get("review_text"),
+            #     rating=form.cleaned_data.get("rating"),
+            # )
+            form.save()
             return HttpResponseRedirect(redirect_to="/thank-you")
     else:
         form = ReviewForm()
