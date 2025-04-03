@@ -1,3 +1,4 @@
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
@@ -5,8 +6,9 @@ from django.views import View
 
 
 class CreateProfileView(View):
-    def get(self, request):
+    def get(self, request: HttpRequest):
         return render(request, "profiles/create-profile.html")
 
-    def post(self, request):
-        pass
+    def post(self, request: HttpRequest):
+        print(request.FILES["image"])
+        return HttpResponseRedirect(redirect_to="/profiles")
