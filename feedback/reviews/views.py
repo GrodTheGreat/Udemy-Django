@@ -1,6 +1,8 @@
+from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
+from django.views.generic.base import TemplateView
 
 from .forms import ReviewForm
 
@@ -10,7 +12,7 @@ from .forms import ReviewForm
 # Create your views here.
 # Class based view
 class ReviewView(View):
-    def get(self, request: HttpRequest):
+    def get(self, request: HttpRequest) -> HttpResponse:
         form = ReviewForm()
         context = {"form": form}
 
@@ -20,7 +22,7 @@ class ReviewView(View):
             context=context,
         )
 
-    def post(self, request: HttpRequest):
+    def post(self, request: HttpRequest) -> HttpResponse | HttpResponseRedirect:
         form = ReviewForm(data=request.POST)
         if form.is_valid():
             form.save()
@@ -65,5 +67,15 @@ class ReviewView(View):
 #     )
 
 
-def thank_you(request: HttpRequest) -> HttpResponse:
-    return render(request=request, template_name="reviews/thank-you.html")
+# def thank_you(request: HttpRequest) -> HttpResponse:
+#     return render(request=request, template_name="reviews/thank-you.html")
+
+
+class ThankYouView(TemplateView):
+    template_name = "reviews/thank-you.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        context["message"] = "This works!"
+
+        return context
