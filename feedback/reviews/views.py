@@ -89,3 +89,14 @@ class ReviewsList(TemplateView):
         context["reviews"] = reviews
 
         return context
+
+
+class ReviewDetail(TemplateView):
+    template_name = "reviews/review-detail.html"
+
+    def get_context_data(self, **kwargs) -> dict[str, Any]:
+        context = super().get_context_data(**kwargs)
+        review = Review.objects.all()
+        context["review"] = review
+
+        return context
