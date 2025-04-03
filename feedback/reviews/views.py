@@ -2,6 +2,7 @@ from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render
 from django.views import View
+from django.views.generic import ListView
 from django.views.generic.base import TemplateView
 
 from .forms import ReviewForm
@@ -80,15 +81,14 @@ class ThankYouView(TemplateView):
         return context
 
 
-class ReviewsList(TemplateView):
+class ReviewsList(ListView):
     template_name = "reviews/review-list.html"
+    model = Review
+    context_object_name = "reviews"
 
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        reviews = Review.objects.all()
-        context["reviews"] = reviews
-
-        return context
+    def get_queryset(self):
+        base_query = super().get_queryset()
+        return base_query.filter(rating__gte=4)
 
 
 class ReviewDetail(TemplateView):
