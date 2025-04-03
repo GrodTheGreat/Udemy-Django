@@ -4,7 +4,6 @@ from typing import Any
 # from django.shortcuts import render
 # from django.views import View
 from django.http import HttpRequest, HttpResponseRedirect
-from django.shortcuts import get_object_or_404
 from django.views import View
 from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
@@ -122,6 +121,5 @@ class ReviewDetail(DetailView):
 class FavoriteView(View):
     def post(self, request: HttpRequest):
         review_id = request.POST.get("review_id")
-        favorite_review = get_object_or_404(Review, pk=review_id)
-        request.session["favorite_review"] = favorite_review
+        request.session["favorite_review"] = review_id
         return HttpResponseRedirect(redirect_to="/reviews/" + review_id)
