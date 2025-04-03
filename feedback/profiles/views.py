@@ -1,17 +1,18 @@
-from django.core.files.uploadedfile import UploadedFile
+# from django.core.files.uploadedfile import UploadedFile
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 from django.views import View
 
 from .forms import ProfileForm
+from .models import UserProfile
 
 # Create your views here.
 
 
-def store_file(file: UploadedFile):
-    with open(file="temp/image.png", mode="wb+") as dest:
-        for chunk in file.chunks():
-            dest.write(chunk)
+# def store_file(file: UploadedFile):
+#     with open(file="temp/image.png", mode="wb+") as dest:
+#         for chunk in file.chunks():
+#             dest.write(chunk)
 
 
 class CreateProfileView(View):
@@ -26,7 +27,9 @@ class CreateProfileView(View):
     def post(self, request: HttpRequest):
         form = ProfileForm(request.POST, request.FILES)
         if form.is_valid():
-            store_file(request.FILES["image"])
+            profile = UserProfile(image=request.FILES["image"])
+            profile.save()
+            # store_file(request.FILES["image"])
             return HttpResponseRedirect(redirect_to="/profiles")
 
         return render(
