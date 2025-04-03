@@ -1,8 +1,8 @@
 from typing import Any
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import render
 from django.views import View
-from django.views.generic import ListView
+from django.views.generic import DetailView, ListView
 from django.views.generic.base import TemplateView
 
 from .forms import ReviewForm
@@ -84,20 +84,22 @@ class ThankYouView(TemplateView):
 class ReviewsList(ListView):
     template_name = "reviews/review-list.html"
     model = Review
-    context_object_name = "reviews"
+    context_object_name = "reviews"  # To define template object name
 
-    def get_queryset(self):
-        base_query = super().get_queryset()
-        return base_query.filter(rating__gte=4)
+    # def get_queryset(self):
+    #     base_query = super().get_queryset()
+    #     return base_query.filter(rating__gte=4)
 
 
-class ReviewDetail(TemplateView):
+class ReviewDetail(DetailView):
+    # Will search by either pk or slug, you can define which in urls.py
     template_name = "reviews/review-detail.html"
+    model = Review
 
-    def get_context_data(self, **kwargs) -> dict[str, Any]:
-        context = super().get_context_data(**kwargs)
-        id = kwargs["id"]
-        review = get_object_or_404(klass=Review, pk=id)
-        context["review"] = review
+    # def get_context_data(self, **kwargs) -> dict[str, Any]:
+    #     context = super().get_context_data(**kwargs)
+    #     id = kwargs["id"]
+    #     review = get_object_or_404(klass=Review, pk=id)
+    #     context["review"] = review
 
-        return context
+    #     return context
