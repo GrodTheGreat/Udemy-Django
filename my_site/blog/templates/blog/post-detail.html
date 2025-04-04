@@ -29,7 +29,8 @@
   </main>
   <section id="comment-form">
     <h2>Your Comment</h2>
-    <form action="">
+    <form action="{% url "post" slug=post.slug %}" method="post">
+      {% csrf_token %}
       {% for field in comment_form %}
         <div class="form-control">
           {{ field.label_tag }}
