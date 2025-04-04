@@ -70,6 +70,7 @@ class PostDetailView(View):
             "post": post,
             "tags": post.tags.all(),
             "comment_form": CommentForm(),
+            "comments": post.comments.all().order_by("-id"),
         }
 
         return render(
@@ -97,6 +98,7 @@ class PostDetailView(View):
             "post": post,
             "tags": post.tags.all(),
             "comment_form": comment_form,
+            "comments": post.comments.all().order_by("-id"),
         }
 
         return render(
