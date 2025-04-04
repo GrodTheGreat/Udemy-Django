@@ -40,3 +40,14 @@ class Post(models.Model):
 
     def __str__(self):
         return f"{self.title} - {self.author.get_full_name()}"
+
+
+class Comment(models.Model):
+    post = models.ForeignKey(
+        to=Post,
+        on_delete=models.CASCADE,
+        related_name="comments",
+    )
+    user_name = models.CharField(max_length=120)
+    user_email = models.EmailField(max_length=250)
+    text = models.TextField(max_length=400)
