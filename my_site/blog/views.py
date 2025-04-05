@@ -106,3 +106,8 @@ class PostDetailView(View):
             template_name="blog/post-detail.html",
             context=context,
         )
+
+
+class ReadLaterView(View):
+    def post(self, request: HttpRequest):
+        pass
