@@ -63,14 +63,24 @@ class AllPostsView(ListView):
 
 
 class PostDetailView(View):
+    def is_stored_post(self, request: HttpRequest, post_id: int) -> bool:
+        stored_posts = request.session.get("stored_posts")
+        if stored_posts is not None:
+            return post_id in stored_posts
+
+        return False
 
     def get(self, request: HttpRequest, slug: str):
         post = get_object_or_404(Post, slug=slug)
+
         context = {
             "post": post,
             "tags": post.tags.all(),
             "comment_form": CommentForm(),
             "comments": post.comments.all().order_by("-id"),
+            "saved_for_later": self.is_stored_post(
+                request=request, post_id=post.id
+            ),
         }
 
         return render(
@@ -99,6 +109,9 @@ class PostDetailView(View):
             "tags": post.tags.all(),
             "comment_form": comment_form,
             "comments": post.comments.all().order_by("-id"),
+            "saved_for_later": self.is_stored_post(
+                request=request, post_id=post.id
+            ),
         }
 
         return render(
@@ -136,6 +149,9 @@ class ReadLaterView(View):
         post_id = int(request.POST.get("post_id"))
         if post_id not in stored_posts:
             stored_posts.append(post_id)
-            request.session["stored_posts"] = stored_posts
+        else:
+            stored_posts.remove(post_id)
+
+        request.session["stored_posts"] = stored_posts
 
         return HttpResponseRedirect(redirect_to="/")
