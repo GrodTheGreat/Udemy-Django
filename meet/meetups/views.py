@@ -21,7 +21,7 @@ def index(request: HttpRequest) -> HttpResponse:
     )
 
 
-def meetup_details(request: HttpRequest) -> HttpResponse:
+def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
     selected_meetup = {
         "title": "A First Meetup",
         "location": "New York",
