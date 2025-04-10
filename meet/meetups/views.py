@@ -24,7 +24,7 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
             template_name="meetups/meetup-details.html",
             context=context,
         )
-    except Exception as exc:
+    except Exception:
         context = {"fail": True}
         return render(
             request=request,
