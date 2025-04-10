@@ -7,9 +7,13 @@ def index(request: HttpRequest) -> HttpResponse:
     meetups = [
         {
             "title": "A First Meetup",
+            "location": "New York",
+            "slug": "a-first-meetup",
         },
         {
             "title": "A Second Meetup",
+            "location": "Paris",
+            "slug": "a-second-meetup",
         },
     ]
     context = {"meetups": meetups, "show_meetups": True}
