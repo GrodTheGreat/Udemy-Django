@@ -2,4 +2,11 @@ from django.contrib import admin
 
 from . import models
 
-admin.site.register(models.Meetup)
+
+class MeetupAdmin(admin.ModelAdmin):
+    list_display = ("title", "slug")
+    list_filter = ("title",)
+    prepopulated_fields = {"slug": ("title",)}
+
+
+admin.site.register(model_or_iterable=models.Meetup, admin_class=MeetupAdmin)
