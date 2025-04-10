@@ -4,4 +4,15 @@ from django.shortcuts import render
 
 # Create your views here.
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request=request, template_name="meetups/index.html")
+    meetups = [
+        {
+            "title": "A First Meetup",
+        },
+        {
+            "title": "A Second Meetup",
+        },
+    ]
+    context = {"meetups": meetups, "show_meetups": True}
+    return render(
+        request=request, template_name="meetups/index.html", context=context
+    )
