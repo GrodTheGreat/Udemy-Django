@@ -11,3 +11,4 @@ class MeetupAdmin(admin.ModelAdmin):
 
 admin.site.register(model_or_iterable=models.Meetup, admin_class=MeetupAdmin)
 admin.site.register(model_or_iterable=models.Location)
+admin.site.register(model_or_iterable=models.Participant)
