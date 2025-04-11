@@ -18,14 +18,14 @@ def index(request: HttpRequest) -> HttpResponse:
 def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
     try:
         selected_meetup = Meetup.objects.get(slug=slug)
-        context = {"meetup": selected_meetup}
+        context = {"meetup": selected_meetup, "found": True}
         return render(
             request=request,
             template_name="meetups/meetup-details.html",
             context=context,
         )
     except Exception:
-        context = {"fail": True}
+        context = {"found": False}
         return render(
             request=request,
             template_name="meetups/meetup-details.html",

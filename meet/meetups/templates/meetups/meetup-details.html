@@ -11,14 +11,15 @@
   {{ meetup.title }}
 {% endblock main_heading %}
 {% block content %}
-  {% if fail %}
-    <p>Meetup not found!</p>
-  {% else %}
+  {% if found %}
     <article>
-      <img src="" alt="" width="300" height="300">
+      <img src="{{ meetup.image.url }}"
+           alt="{{ meetup.title }}"
+           width="300"
+           height="300">
       <section id="location">
         <h2>Meetup Location</h2>
-        <address>This meetup takes place in <span>LOCATION</span> (ADDRESS).</address>
+        <address>This meetup takes place in <span>{{ meetup.location.name }}</span> ({{ meetup.location.address }}).</address>
       </section>
       <section id="details">
         <h2>What's This Meetup About?</h2>
@@ -34,5 +35,7 @@
         FORM
       </section>
     </article>
+  {% else %}
+    <p>Meetup not found!</p>
   {% endif %}
 {% endblock content %}
