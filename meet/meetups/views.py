@@ -18,18 +18,31 @@ def index(request: HttpRequest) -> HttpResponse:
 
 def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
     try:
-        selected_meetup = Meetup.objects.get(slug=slug)
-        registration_form = RegistrationForm()
-        context = {
-            "meetup": selected_meetup,
-            "found": True,
-            "form": registration_form,
-        }
-        return render(
-            request=request,
-            template_name="meetups/meetup-details.html",
-            context=context,
-        )
+        if request.method == "GET":
+            selected_meetup = Meetup.objects.get(slug=slug)
+            registration_form = RegistrationForm()
+            context = {
+                "meetup": selected_meetup,
+                "found": True,
+                "form": registration_form,
+            }
+            return render(
+                request=request,
+                template_name="meetups/meetup-details.html",
+                context=context,
+            )
+        else:
+            registration_form = RegistrationForm(request.POST)
+            if registration_form.is_valid():
+                participant = registration_form.save()
+                selected_meetup.participants.add(participant)
+
+            else:
+                return render(
+                    request=request,
+                    template_name="meetups/meetup-details.html",
+                    context=context,
+                )
     except Exception:
         context = {"found": False}
         return render(
