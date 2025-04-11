@@ -39,7 +39,10 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
                     email=user_email
                 )
                 selected_meetup.participants.add(participant)
-                return redirect(to="confirm-registration")
+                return redirect(
+                    to="confirm-registration",
+                    slug=selected_meetup.slug,
+                )
             else:
                 context = {
                     "meetup": selected_meetup,
@@ -51,7 +54,8 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
                     template_name="meetups/meetup-details.html",
                     context=context,
                 )
-    except Exception:
+    except Exception as ex:
+        print(ex)
         context = {"found": False}
         return render(
             request=request,
@@ -60,7 +64,11 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
         )
 
 
-def confirm_registration(request: HttpRequest) -> HttpResponse:
+def confirm_registration(request: HttpRequest, slug: str) -> HttpResponse:
+    meetup = Meetup.objects.get(slug=slug)
+    context = {"meetup": meetup}
     return render(
-        request=request, template_name="meetups/registration-success.html"
+        request=request,
+        template_name="meetups/registration-success.html",
+        context=context,
     )
