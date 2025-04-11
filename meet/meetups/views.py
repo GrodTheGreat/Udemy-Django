@@ -2,7 +2,7 @@ from django.http import HttpRequest, HttpResponse
 from django.shortcuts import redirect, render
 
 from .forms import RegistrationForm
-from .models import Meetup
+from .models import Meetup, Participant
 
 
 def index(request: HttpRequest) -> HttpResponse:
@@ -34,7 +34,10 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
         else:
             registration_form = RegistrationForm(request.POST)
             if registration_form.is_valid():
-                participant = registration_form.save()
+                user_email = registration_form.cleaned_data.get("email")
+                participant, _ = Participant.objects.get_or_create(
+                    email=user_email
+                )
                 selected_meetup.participants.add(participant)
                 return redirect(to="confirm-registration")
             else:
@@ -48,8 +51,7 @@ def meetup_details(request: HttpRequest, slug: str) -> HttpResponse:
                     template_name="meetups/meetup-details.html",
                     context=context,
                 )
-    except Exception as e:
-        print(e)
+    except Exception:
         context = {"found": False}
         return render(
             request=request,
