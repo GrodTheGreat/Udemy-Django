@@ -19,8 +19,10 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
+    path(route="", view=RedirectView.as_view(url="meetups/")),
     path(route="meetups/", view=include("meetups.urls")),
     path(route="admin/", view=admin.site.urls),
 ] + static(prefix=settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
